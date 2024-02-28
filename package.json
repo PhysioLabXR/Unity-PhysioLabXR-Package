@@ -1,0 +1,24 @@
+{
+    "name": "com.neureality.lz",
+    "version": "1.0.0",
+    "displayName": "Neureality LSL and ZMQ",
+    "description": "Easy LSL and ZMQ broadcasting in Unity, made for Neureality!\n\nManual Dependencies -- Add these packages via their URL, just like this one:\n\thttps://github.com/labstreaminglayer/LSL4Unity.git",
+    "unity": "2022.3",
+    "author": {
+        "name": "Jace Li",
+        "email": "yl4862@columbia.edu",
+        "url": "https://www.linkedin.com/in/jydli/"
+    },
+    "samples": [
+        {
+            "displayName": "LSL Example",
+            "description": "A simple example of how to use LSL in Unity.",
+            "path": "Samples~/LSL/"
+        },
+        {
+            "displayName": "ZMQ Example",
+            "description": "A simple example of how to use ZMQ in Unity.",
+            "path": "Samples~/ZMQ/"
+        }
+    ]
+}
