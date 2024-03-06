@@ -1,7 +1,7 @@
 {
     "name": "com.physiolabxr.lslzmq",
     "version": "1.0.0",
-    "displayName": "Neureality LSL and ZMQ",
+    "displayName": "PhysioLabXR LSL and ZMQ",
     "description": "Easy LSL and ZMQ broadcasting in Unity",
     "unity": "2022.3",
     "author": {
