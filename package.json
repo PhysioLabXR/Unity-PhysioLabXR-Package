@@ -1,8 +1,8 @@
 {
-    "name": "com.neureality.lz",
+    "name": "com.physiolabxr.lslzmq",
     "version": "1.0.0",
     "displayName": "Neureality LSL and ZMQ",
-    "description": "Easy LSL and ZMQ broadcasting in Unity, made for Neureality!\n\nManual Dependencies -- Add these packages via their URL, just like this one:\n\thttps://github.com/labstreaminglayer/LSL4Unity.git",
+    "description": "Easy LSL and ZMQ broadcasting in Unity",
     "unity": "2022.3",
     "author": {
         "name": "Jace Li",
