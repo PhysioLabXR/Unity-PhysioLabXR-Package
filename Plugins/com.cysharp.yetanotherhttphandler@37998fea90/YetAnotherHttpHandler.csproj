@@ -1,0 +1,88 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net7.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <LangVersion>9.0</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AssemblyName>Cysharp.Net.Http.YetAnotherHttpHandler</AssemblyName>
+    <RootNamespace>Cysharp.Net.Http</RootNamespace>
+    <VersionPrefix>0.1.0</VersionPrefix>
+
+    <!-- NuGet Package -->
+    <PackageId>YetAnotherHttpHandler</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Pipelines" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="YetAnotherHttpHandler.Test" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="**\*.meta" />
+    <None Remove="Plugins\**\*" />
+    <None Remove="bin\**\*.*;obj\**\*.*" />
+    <Compile Remove="obj\**\*.cs" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <YahaNativeLibraryOriginalName>yaha_native</YahaNativeLibraryOriginalName>
+    <YahaNativeLibraryName>Cysharp.Net.Http.YetAnotherHttpHandler.Native</YahaNativeLibraryName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <YahaNativeArtifactTarget Visible="false" />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <YahaNativeArtifactTarget Include="win-x86" RustTarget="i686-pc-windows-msvc" Prefix="" Ext=".dll" />
+    <YahaNativeArtifactTarget Include="win-x64" RustTarget="x86_64-pc-windows-msvc" Prefix="" Ext=".dll" />
+    <YahaNativeArtifactTarget Include="win-arm64" RustTarget="aarch64-pc-windows-msvc" Prefix="" Ext=".dll" />
+    <YahaNativeArtifactTarget Include="win-arm64-uwp" RustTarget="aarch64-uwp-windows-msvc" Prefix="" Ext=".dll" />
+    <YahaNativeArtifactTarget Include="linux-x64" RustTarget="x86_64-unknown-linux-gnu" Prefix="lib" Ext=".so" />
+    <YahaNativeArtifactTarget Include="linux-arm64" RustTarget="aarch64-unknown-linux-gnu" Prefix="lib" Ext=".so" />
+    <YahaNativeArtifactTarget Include="osx-x64" RustTarget="x86_64-apple-darwin" Prefix="lib" Ext=".dylib" />
+    <YahaNativeArtifactTarget Include="osx-arm64" RustTarget="aarch64-apple-darwin" Prefix="lib" Ext=".dylib" />
+    <YahaNativeArtifactTarget Include="ios-x64" RustTarget="x86_64-apple-ios" Prefix="lib" Ext=".a" />
+    <YahaNativeArtifactTarget Include="ios-arm64" RustTarget="aarch64-apple-ios" Prefix="lib" Ext=".a" />
+    <YahaNativeArtifactTarget Include="android-arm" RustTarget="armv7-linux-androideabi" Prefix="lib" Ext=".so" />
+    <YahaNativeArtifactTarget Include="android-arm64" RustTarget="aarch64-linux-android" Prefix="lib" Ext=".so" />
+    <YahaNativeArtifactTarget Include="android-x64" RustTarget="x86_64-linux-android" Prefix="lib" Ext=".so" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <YahaNativeArtifactTarget Update="@(YahaNativeArtifactTarget)" Rid="%(Identity)" />
+
+    <YahaNativeArtifact Include="@(YahaNativeArtifactTarget)">
+      <LibraryPath>..\..\native\artifacts\%(Identity)\%(Prefix)$(YahaNativeLibraryOriginalName)%(Ext)</LibraryPath>
+      <RustOutputDebugPath>..\..\native\target\%(RustTarget)\debug\%(Prefix)$(YahaNativeLibraryOriginalName)%(Ext)</RustOutputDebugPath>
+      <RustOutputReleasePath>..\..\native\target\%(RustTarget)\release\%(Prefix)$(YahaNativeLibraryOriginalName)%(Ext)</RustOutputReleasePath>
+
+      <!-- for Content -->
+      <Link>runtimes\%(YahaNativeArtifact.Rid)\native\%(YahaNativeArtifact.Prefix)$(YahaNativeLibraryName)%(Ext)</Link>
+      <PackagePath>runtimes\%(YahaNativeArtifact.Rid)\native\%(YahaNativeArtifact.Prefix)$(YahaNativeLibraryName)%(Ext)</PackagePath>
+      <Pack>true</Pack>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </YahaNativeArtifact>
+    <YahaNativeArtifact Update="@(YahaNativeArtifact)" LibraryPathExists="@(YahaNativeArtifact-&gt;'%(LibraryPath)'-&gt;Exists())" />
+
+    <YahaNativeArtifactFile Include="@(YahaNativeArtifact-&gt;'%(RustOutputReleasePath)'-&gt;Exists())" LibraryOrigin="RustOutputRelease" />
+    <YahaNativeArtifactFile Include="@(YahaNativeArtifact-&gt;'%(RustOutputDebugPath)'-&gt;Exists())" LibraryOrigin="RustOutputDebug" />
+    <YahaNativeArtifactFile Include="@(YahaNativeArtifact-&gt;'%(LibraryPath)'-&gt;Exists())" LibraryOrigin="Artifacts" />
+
+    <!-- During development build, the native libraries are referenced directly from the output directory of Rust (native/target/{build-target}/{debug,release}/...) -->
+    <Content Include="@(YahaNativeArtifact-&gt;'%(RustOutputDebugPath)'-&gt;Exists())" Condition="'$(Configuration)' == 'Debug'" />
+    <Content Include="@(YahaNativeArtifact-&gt;'%(RustOutputReleasePath)'-&gt;Exists())" Condition="'$(Configuration)' == 'Release'" />
+  </ItemGroup>
+
+  <!-- When packaging, the native libraries are referenced from the artifacts directory (native/artifacts/{rid}/...) -->
+  <Target Name="YahaBeforePack" BeforeTargets="DispatchToInnerBuilds" Condition="'$(ContinuePackingAfterGeneratingNuspec)' != ''">
+    <ItemGroup>
+      <Content Include="@(YahaNativeArtifact-&gt;'%(LibraryPath)'-&gt;Exists())" />
+      <Content Remove="@(YahaNativeArtifact-&gt;'%(RustOutputDebugPath)'-&gt;Exists())" />
+      <Content Remove="@(YahaNativeArtifact-&gt;'%(RustOutputReleasePath)'-&gt;Exists())" />
+    </ItemGroup>
+  </Target>
+
+</Project>

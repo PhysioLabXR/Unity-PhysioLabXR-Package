@@ -1,8 +1,8 @@
 {
-    "name": "com.physiolabxr.lslzmq",
-    "version": "1.0.0",
-    "displayName": "PhysioLabXR LSL and ZMQ",
-    "description": "Easy LSL and ZMQ broadcasting in Unity",
+    "name": "com.physiolabxr.unityplugin",
+    "version": "1.0.1",
+    "displayName": "PhysioLabXR interfaces: LSL, ZMQ, and GRPC",
+    "description": "Easy LSL, ZMQ, and GRPC communication to and from Unity",
     "unity": "2022.3",
     "author": {
         "name": "Jace Li",
@@ -19,6 +19,11 @@
             "displayName": "ZMQ Example",
             "description": "A simple example of how to use ZMQ in Unity.",
             "path": "Samples~/ZMQ/"
+        },
+        {
+            "displayName": "GRPC Example",
+            "description": "A simple example of how to use GRPC in Unity.",
+            "path": "Samples~/GRPC/"
         }
     ]
 }
