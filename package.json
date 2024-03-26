@@ -5,9 +5,9 @@
     "description": "Easy LSL, ZMQ, and GRPC communication to and from Unity",
     "unity": "2022.3",
     "author": {
-        "name": "Jace Li",
-        "email": "yl4862@columbia.edu",
-        "url": "https://www.linkedin.com/in/jydli/"
+        "name": "Team PhysioLabXR",
+        "email": "support@physiolabxr.org",
+        "url": "https://physiolabxr.org/"
     },
     "samples": [
         {
