@@ -9,7 +9,9 @@ LSL Support: Stream and receive real-time data with Lab Streaming Layer, perfect
 ZMQ Integration: Use ZeroMQ for high-performance asynchronous messaging in distributed or concurrent applications.
 gRPC Communication: Implement efficient, low-latency remote procedure calls (RPCs) with gRPC, ideal for scalable microservices and cloud-based apps.
 
-## 
+## How to edit the plugin
+1. Clone the repo, and open it in Unity.
+2. To edit the sample scenes, rename 'sample'
 
 ## Documentation
 Please find the complete docs on how to use this package [here](https://physiolabxrdocs.readthedocs.io/en/latest/LSLZMQUnityPackage.html).
