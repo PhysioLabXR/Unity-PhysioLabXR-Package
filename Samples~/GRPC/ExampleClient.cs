@@ -15,7 +15,7 @@ public class ExampleClient : MonoBehaviour
     private YetAnotherHttpHandler handler;
     private RPCExample.RPCExampleClient client;
 
-    public string host = "http://localhost:8004";
+    public string host = "http://localhost:13004";
 
     // Start is called before the first frame update
     void Start()
