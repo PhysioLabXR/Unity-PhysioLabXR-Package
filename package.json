@@ -1,6 +1,6 @@
 {
     "name": "com.physiolabxr.unityplugin",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "displayName": "PhysioLabXR interfaces: LSL, ZMQ, and GRPC",
     "description": "Easy LSL, ZMQ, and GRPC communication to and from Unity",
     "unity": "2022.3",
